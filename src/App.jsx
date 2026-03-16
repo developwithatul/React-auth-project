@@ -10,6 +10,7 @@ function App() {
   <h1>hello sir </h1>
       <Routes>
          <Route path='/auth' element={<Auth />} />
+         <Route path="/auth" element={<Auth />} />
       </Routes>
  </div>
   )
