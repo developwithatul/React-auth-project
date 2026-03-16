@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useForm } from "react-hook-form";
+import google from "../assets/google.png";
+import facebook from "../assets/facebook.avif";
 
 const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -15,36 +17,33 @@ const Auth = () => {
   const onSubmit = (data) => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
 
-     if (isLogin) {
+    if (isLogin) {
+      if (!storedUser) {
+        alert("User not found. Please signup first.");
+        return;
+      }
 
-    if (!storedUser) {
-      alert("User not found. Please signup first.");
-      return;
+      if (storedUser.EmailAddress !== data.EmailAddress) {
+        alert("Email is incorrect");
+        return;
+      }
+
+      if (storedUser.Password !== data.Password) {
+        alert("Password is incorrect");
+        return;
+      }
+
+      alert("Login successful!");
+    } else {
+      if (data.Password !== data.ConformPassword) {
+        alert("Passwords do not match");
+        return;
+      }
+
+      localStorage.setItem("user", JSON.stringify(data));
+      alert("Signup successful! Now you can login.");
+      setIsLogin(true);
     }
-
-    if (storedUser.EmailAddress !== data.EmailAddress) {
-      alert("Email is incorrect");
-      return;
-    }
-
-    if (storedUser.Password !== data.Password) {
-      alert("Password is incorrect");
-      return;
-    }
-
-    alert("Login successful!");
-
-  } else {
-
-    if (data.Password !== data.ConformPassword) {
-      alert("Passwords do not match");
-      return;
-    }
-
-    localStorage.setItem("user", JSON.stringify(data));
-    alert("Signup successful! Now you can login.");
-    setIsLogin(true);
-  }
   };
   const handleForgotPassword = () => {
     const email = prompt("Enter your registered email");
@@ -79,13 +78,14 @@ const Auth = () => {
                   : "Join to your forever account "}
               </p>
               {/* social button */}
-              <div className=" grid grid-cols-2 gap-6 mt-6">
+              <div className="grid grid-cols-2 gap-6 mt-6">
                 <button className="flex items-center justify-center border gap-2 py-2 border-gray-300">
-                  <img className="w-7" src="src/assets/google.png" alt="" />
-                  Googl
+                  <img className="w-7" src={google} alt="img_google" />
+                  Google
                 </button>
+
                 <button className="flex items-center justify-center border gap-2 py-2 border-gray-300">
-                  <img className="w-7" src="src/assets/facebook.avif" alt="" />
+                  <img className="w-7" src={facebook} alt="img_facebook" />
                   Facebook
                 </button>
               </div>
@@ -116,11 +116,11 @@ const Auth = () => {
                         placeholder="Enter your First Name "
                         type="text"
                       />
-                       {errors.firstName &&(
-                         <p className="text-red-500 text-sm mt-1">
-                          {errors.firstName.message} 
-                          </p> 
-                        )}
+                      {errors.firstName && (
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.firstName.message}
+                        </p>
+                      )}
                     </div>
                     <div>
                       <label className="block text-gray-700 mb-2 ">
@@ -172,11 +172,11 @@ const Auth = () => {
                         placeholder="Enter your password"
                         type={showPassword ? "text" : "password"}
                       />
-                      {errors.Password &&(
-                         <p className="text-red-500 text-sm mt-1">
-                          {errors.Password.message} 
-                          </p> 
-                        )}
+                      {errors.Password && (
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.Password.message}
+                        </p>
+                      )}
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
@@ -198,14 +198,14 @@ const Auth = () => {
                             required: true,
                             minLength: 6,
                           })}
-                          className={`border-gray-300 w-full px-4 py-2 border outline-none placeholder:text-sm ${ errors.ConformPassword ? "border-red-500" : ""}`}
+                          className={`border-gray-300 w-full px-4 py-2 border outline-none placeholder:text-sm ${errors.ConformPassword ? "border-red-500" : ""}`}
                           placeholder="Enter your conform password"
                           type={showPassword ? "text" : "password"}
                         />
-                        {errors.ConformPassword &&(
-                         <p className="text-red-500 text-sm mt-1">
-                          {errors.ConformPassword.message} 
-                          </p> 
+                        {errors.ConformPassword && (
+                          <p className="text-red-500 text-sm mt-1">
+                            {errors.ConformPassword.message}
+                          </p>
                         )}
                         <button
                           type="button"
