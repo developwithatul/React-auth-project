@@ -9,8 +9,9 @@ function App() {
  <div>
   <h1>hello sir </h1>
       <Routes>
-         <Route path='/auth' element={<Auth />} />
+         <Route path='/' element={<Auth />} />
          <Route path="/auth" element={<Auth />} />
+         <Route path="*" element={<Auth />} />
       </Routes>
  </div>
   )
