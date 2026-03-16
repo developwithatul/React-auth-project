@@ -80,7 +80,7 @@ const Auth = () => {
               {/* social button */}
               <div className="grid grid-cols-2 gap-6 mt-6">
                 <button className="flex items-center justify-center border gap-2 py-2 border-gray-300">
-                  <img className="w-7" src={google} alt="img_google" />
+                  <img className="w-7" src="src/assets/google.png" alt="" />
                   Google
                 </button>
 
